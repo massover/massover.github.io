@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Joshua Massover's Personal Blog - Joshua Massover</title>
+        <title>Joshua Massover's Personal Blog : Why I am excited about ASGI & Django</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.7.2/tufte.min.css" type="text/css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pygments-css@1.0.0/github.css" type="text/css" />
@@ -21,14 +21,11 @@
 
 <body>
 <h1><a href="https://massover.com" id="site-title">Joshua Massover's Personal Blog </a></h1>
-        
-
-            <header>
-                <h2><a href="https://massover.com/why-i-am-excited-about-asgi-django.html" id="page-title">Why I am excited about ASGI & Django</a></h2>
-<time datetime="2020-06-23T08:14:00-04:00">Tue 23 June 2020</time>            </header>
-
-            <article>
-                <p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me!
+<header>
+    <h2><a href="https://massover.com/why-i-am-excited-about-asgi-django.html" id="page-title">Why I am excited about ASGI & Django</a></h2>
+<time datetime="2020-06-23T08:14:00-04:00">Tue 23 June 2020</time></header>
+<article>
+    <p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me!
 ASGI is exciting for implementing <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">server sent events (SSE)</a>.
 Server sent events are an easy alternative to something like WebSockets to allow the server to push data to the browser. As WSGI requests 
 requests are blocking by nature, we can not use WSGI to serve SSE. However, ASGI works great!</p>
@@ -220,7 +217,8 @@ is copied and pasted from the django <code>ASGIHandler</code>, with additional c
 
 <p>Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom <code>ASGIHandler</code> and <code>AysncStreamingHttpResponse</code>, the code is very familiar to WSGI
-and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in django?</p>            </article>
+and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in django?</p>
+</article>
 
         <footer>
             <nav>
