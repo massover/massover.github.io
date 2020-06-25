@@ -2,34 +2,15 @@
 {% block content_title %}{% endblock %}
 {% block content %}
 <h1><a href="{{ SITEURL }}" id="site-title">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>
-{% if articles %}
-    {% for article in articles %}        
+<section id="article-list">
+<h2>All posts</h2>
+<ol>
 
-        {# First item #}
-        {% if loop.first %}
-            <header>
-                <h2><a href="{{ SITEURL }}/{{ article.url }}" id="page-title">{{ article.title }}</a></h2>
-                {% if not HIDE_DATE %}<time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>{% endif %}
-            </header>
+{% for article in articles %}
 
-            <article>
-                <section>{{ article.content }}</section>{% include 'comments.html' %}
-            </article>
-            {% if loop.length > 1 %}
-                <section id="article-list">
-                    <h2>All posts</h2>
-                    <ol>
-            {% endif %}
-        {# other items #}
-        {% else %} 
-            <li><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></li>
-        {% endif %}
-        {% if loop.length > 1 %}
-            </ol>
-            </section><!-- #article-list -->
-        {% endif %}
-    {% endfor %}
-{% else %}
-    No posts found.
-{% endif %}
+    <li><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></li>
+
+{% endfor %}
+</ol>
+</section><!-- #article-list -->
 {% endblock content %}
