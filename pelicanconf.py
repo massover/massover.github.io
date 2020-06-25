@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Joshua Massover'
 SITENAME = "Joshua Massover's Personal Blog"
-SITEURL = 'http://localhost:8000'
+SITEURL = 'https://localhost:8000'
 
 PATH = 'content'
 
@@ -35,4 +35,8 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 THEME = "themes/mnmlist"
+
+STATIC_PATHS = ['images', 'extra/CNAME']
+
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 
