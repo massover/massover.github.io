@@ -134,13 +134,13 @@ Full code can be <a href="https://github.com/massover/sse-example">found here</a
 <li>Make our stream an async generator</li>
 <li>Make the index an async view</li>
 </ul>
-<p>Then, there are a few things to do that will remind you that ASGI support is new. If we try and use a <code>StreamingHttpResponse</code>
+<p>Then there are a few things to do that will remind you that ASGI support is new. If we try and use a <code>StreamingHttpResponse</code>
 with our async generator, we'll run into <code>TypeError: 'async_generator' object is not iterable</code>.  To support an async generator 
-for a streaming http response, we can extend <code>HttpResponse</code> with a <a href="https://github.com/massover/sse-example/blob/master/responses.py">async http streaming response class</a>.
+for a streaming http response, we can extend <code>HttpResponse</code> with an <a href="https://github.com/massover/sse-example/blob/master/responses.py">async http streaming response class</a>.
 Additionally, to support this new response, we need a <a href="https://github.com/massover/sse-example/blob/master/asgi.py">custom asgi handler</a>. 
 The existing <code>ASGIHandler</code> does not support streaming from async_generators. We need to use an <code>async for part in response</code> 
 instead of just our <code>for part in response</code>. Without methods to super, most of the logic for <code>__call__</code> and <code>send_response</code> 
-is copied and pasted from the django <code>ASGIHandler</code>, with additional code to close the request when browsers disconnect.</p>
+is copied and pasted from the Django <code>ASGIHandler</code>, with additional code to close the request when browsers disconnect.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -217,7 +217,7 @@ is copied and pasted from the django <code>ASGIHandler</code>, with additional c
 
 <p>Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom <code>ASGIHandler</code> and <code>AysncStreamingHttpResponse</code>, the code is very familiar to WSGI
-and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in django?</p>
+and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in Django?</p>
 </article>
 
         <footer>
