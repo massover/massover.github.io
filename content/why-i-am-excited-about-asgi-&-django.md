@@ -116,13 +116,13 @@ To make this async, there are a few easy things we need to:
 - Make our stream an async generator
 - Make the index an async view
 
-Then, there are a few things to do that will remind you that ASGI support is new. If we try and use a `StreamingHttpResponse`
+Then there are a few things to do that will remind you that ASGI support is new. If we try and use a `StreamingHttpResponse`
 with our async generator, we'll run into `TypeError: 'async_generator' object is not iterable`.  To support an async generator 
-for a streaming http response, we can extend `HttpResponse` with a [async http streaming response class](https://github.com/massover/sse-example/blob/master/responses.py).
+for a streaming http response, we can extend `HttpResponse` with an [async http streaming response class](https://github.com/massover/sse-example/blob/master/responses.py).
 Additionally, to support this new response, we need a [custom asgi handler](https://github.com/massover/sse-example/blob/master/asgi.py). 
 The existing `ASGIHandler` does not support streaming from async_generators. We need to use an `async for part in response` 
 instead of just our `for part in response`. Without methods to super, most of the logic for `__call__` and `send_response` 
-is copied and pasted from the django `ASGIHandler`, with additional code to close the request when browsers disconnect.
+is copied and pasted from the Django `ASGIHandler`, with additional code to close the request when browsers disconnect.
 
 ```python
 import asyncio
@@ -201,4 +201,4 @@ uvicorn asgi:application --workers 1
 
 Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom `ASGIHandler` and `AysncStreamingHttpResponse`, the code is very familiar to WSGI
-and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in django?
+and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in Django?
