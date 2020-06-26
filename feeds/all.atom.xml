@@ -5,7 +5,7 @@ SSE allows the server to stream events to the front end. While the connection is
 ASGI is exciting for implementing &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"&gt;server sent events (SSE)&lt;/a&gt;.
 SSE allows the server to stream events to the front end. While the connection is only one way from the server to the browser,
 it can be a nice sweet spot between WebSocket complexity and long polling. As WSGI requests are blocking by nature, 
-we can not use WSGI to serve SSE. However, ASGI works great!&lt;/p&gt;
+we can not use WSGI to serve SSE. However, ASGI works great.&lt;/p&gt;
 &lt;h2&gt;Lets start with WSGI&lt;/h2&gt;
 &lt;p&gt;This is a single module &lt;a href="https://www.djangoproject.com/"&gt;django&lt;/a&gt; application using &lt;a href="https://www.djangoproject.com/weblog/2020/jun/15/django-31-beta-1-released/"&gt;3.1 beta&lt;/a&gt;. 
 Full code can be &lt;a href="https://github.com/massover/sse-example"&gt;found here&lt;/a&gt;.&lt;/p&gt;
