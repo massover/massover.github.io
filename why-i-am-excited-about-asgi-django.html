@@ -16,7 +16,7 @@
     <h2><a href="https://www.massover.com/why-i-am-excited-about-asgi-django.html" id="page-title">Why I am excited about ASGI & Django</a></h2>
 <time datetime="2020-06-23T08:14:00-04:00">Tue 23 June 2020</time></header>
 <article>
-    <p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
+    <section><p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
 ASGI is exciting for implementing <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">server sent events (SSE)</a>.
 SSE allows the server to stream events to the front end. While the connection is only one way, from the server to the browser,
 it can be a nice sweet spot between WebSocket complexity and long polling. As WSGI requests are blocking by nature, 
@@ -207,7 +207,8 @@ is copied and pasted from the Django <code>ASGIHandler</code>, with additional c
 
 <p>Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom <code>ASGIHandler</code> and <code>AysncStreamingHttpResponse</code>, the code is very familiar to WSGI
-and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in Django?</p>
+and doesn't change much besides using async constructs. What else can you think of that we can implement with native ASGI in Django?</p></section>
+
 </article>
 
         <footer>
