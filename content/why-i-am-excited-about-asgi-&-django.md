@@ -4,7 +4,7 @@ Category: Django
 
 Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
 ASGI is exciting for implementing [server sent events (SSE)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events).
-SSE allows the server to stream events to the front end. While the connection is only one way, from the server to the browser,
+SSE allows the server to stream events to the front end. While the connection is only one way from the server to the browser,
 it can be a nice sweet spot between WebSocket complexity and long polling. As WSGI requests are blocking by nature, 
 we can not use WSGI to serve SSE. However, ASGI works great!
 
