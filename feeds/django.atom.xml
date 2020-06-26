@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog - Django</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/django.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2020-06-23T08:14:00-04:00</updated><entry><title>Why I am excited about ASGI &amp; Django</title><link href="https://www.massover.com/why-i-am-excited-about-asgi-django.html" rel="alternate"></link><published>2020-06-23T08:14:00-04:00</published><updated>2020-06-23T08:14:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2020-06-23:/why-i-am-excited-about-asgi-django.html</id><summary type="html">&lt;p&gt;Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
 ASGI is exciting for implementing &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"&gt;server sent events (SSE)&lt;/a&gt;.
-SSE allows the server to stream events to the front end. While the connection is only one way, from …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
+SSE allows the server to stream events to the front end. While the connection is only one way from …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
 ASGI is exciting for implementing &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"&gt;server sent events (SSE)&lt;/a&gt;.
-SSE allows the server to stream events to the front end. While the connection is only one way, from the server to the browser,
+SSE allows the server to stream events to the front end. While the connection is only one way from the server to the browser,
 it can be a nice sweet spot between WebSocket complexity and long polling. As WSGI requests are blocking by nature, 
 we can not use WSGI to serve SSE. However, ASGI works great!&lt;/p&gt;
 &lt;h2&gt;Lets start with WSGI&lt;/h2&gt;
