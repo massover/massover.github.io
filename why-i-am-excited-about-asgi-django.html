@@ -16,11 +16,12 @@
     <h2><a href="https://www.massover.com/why-i-am-excited-about-asgi-django.html" id="page-title">Why I am excited about ASGI & Django</a></h2>
 <time datetime="2020-06-23T08:14:00-04:00">Tue 23 June 2020</time></header>
 <article>
-    <section><p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has generally been good enough for me.
-ASGI is exciting for implementing <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">server sent events (SSE)</a>.
-SSE allows the server to stream events to the front end. While the connection is only one way from the server to the browser,
-it can be a nice sweet spot between WebSocket complexity and long polling. As WSGI requests are blocking by nature, 
-we can not use WSGI to serve SSE. However, ASGI works great.</p>
+    <section><p>Most talk about ASGI usually involves performance. While a performance boost can be nice, WSGI has been good enough for me.
+As WSGI is blocking by nature, we could not use it to implement a streaming protocol.
+Before Django had native ASGI support, you may have reached for <a href="https://channels.readthedocs.io/en/latest/">channels</a> or even used
+a third party service to support a streaming connection with the browser. With ASGI support coming in Django, 
+we can implement <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">Server Sent Events (SSE)</a> 
+as a nice sweet spot between WebSocket complexity and long polling.</p>
 <h2>Lets start with WSGI</h2>
 <p>This is a single module <a href="https://www.djangoproject.com/">django</a> application using <a href="https://www.djangoproject.com/weblog/2020/jun/15/django-31-beta-1-released/">3.1 beta</a>. 
 Full code can be <a href="https://github.com/massover/sse-example">found here</a>.</p>
