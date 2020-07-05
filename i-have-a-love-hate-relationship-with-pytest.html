@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Joshua Massover's Personal Blog : I have a love hate relationship with pytest</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://www.massover.com/theme/css/tufte.min.css" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pygments-css@1.0.0/github.css" type="text/css" />
+        <link href="https://www.massover.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joshua Massover's Personal Blog ATOM Feed" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+<h1><a href="https://www.massover.com" id="site-title">Joshua Massover's Personal Blog </a></h1>
+<header>
+    <h2><a href="https://www.massover.com/i-have-a-love-hate-relationship-with-pytest.html" id="page-title">I have a love hate relationship with pytest</a></h2>
+<time datetime="2020-07-04T10:43:00-04:00">Sat 04 July 2020</time></header>
+<article>
+    <section><p>The community has spoken. If you're green fielding a python project, the best bet for your tests is using <a href="https://docs.pytest.org/en/stable/">pytest</a>.
+Whether you need parallel test support, code coverage, or integration with some library you're using, you can most likely
+find an existing pytest plugin. What would it be like to take the things I love from pytest and apply
+them to <a href="https://docs.python.org/3.8/library/unittest.html">unittest</a>? Full code can be found <a href="https://github.com/massover/unittestplus">here</a>.</p>
+<h2>Function based tests</h2>
+<p>For a lot of my tests in pytest, I still end up using classes as they are an additional nice way to namespace your tests
+on top of modules and packages. However, when there are only a few code paths to test, I find that function 
+based tests are more readable and easier to maintain than classes.</p>
+<p>I came across a <a href="https://docs.python.org/3/library/unittest.html#unittest.FunctionTestCase">FunctionTestCase</a>
+class that exists in the stdlib. However, this test case is intended for legacy code, and they are <a href="https://bugs.python.org/issue22680">blocked from
+test default discovery</a></p>
+<p>We can build a decorator on top of a function to leverage the existing <code>unittest</code> framework. This will make the
+function discoverable and we can use the existing test case assertions.</p>
+<p><strong>Note</strong></p>
+<p>All of the tests will be around a dataclass for a Dog class.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Dog</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">testcase</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">func_name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">if</span> <span class="n">func_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">func_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">):</span>
+        <span class="n">test_func_name</span> <span class="o">=</span> <span class="n">func_name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">test_func_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;test_</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">testcase_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;TestCase__</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">testcase_name</span><span class="p">,</span> <span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">,</span> <span class="p">),</span> <span class="p">{</span>
+        <span class="n">func_name</span><span class="p">:</span> <span class="n">method</span>
+    <span class="p">})</span>
+
+<span class="nd">@testcase</span>
+<span class="k">def</span> <span class="nf">test_dog_age</span><span class="p">(</span><span class="n">test</span><span class="p">):</span>
+    <span class="n">dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Bruce&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">test</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dog</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
+test_dog_age <span class="o">(</span>unittestplus.TestCase__test_dog_age<span class="o">)</span> ... ok
+
+----------------------------------------------------------------------
+Ran <span class="m">1</span> <span class="nb">test</span> in <span class="m">0</span>.000s
+
+OK
+</code></pre></div>
+
+
+<h2>Parametrization</h2>
+<p><a href="https://docs.pytest.org/en/stable/parametrize.html">Parametrization</a> in pytest is great. The stdlib already has 
+<a href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.subTest">subTests</a>. A thin decorator wrapper around subTest
+can make for some similar syntactical sugar. Personally, I prefer the decorator to the context manager.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parametrize</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">msg_params</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg_params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="n">msg_params</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="n">msg_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="n">msg_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">with</span> <span class="n">instance</span><span class="o">.</span><span class="n">subTest</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapped</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+
+<span class="k">class</span> <span class="nc">TestDog</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@parametrize</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;Name is Bruce&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bruce&#39;</span><span class="p">}),</span>
+        <span class="p">(</span><span class="s1">&#39;Name is Peneloope&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Penelope&#39;</span><span class="p">}),</span>
+    <span class="p">])</span>
+    <span class="k">def</span> <span class="nf">test_dog_name_msg_and_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">dog</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dog</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;fail&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
+test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> ... 
+<span class="o">======================================================================</span>
+FAIL: test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> <span class="o">[</span>Name is Bruce<span class="o">]</span> <span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Bruce&#39;</span><span class="o">)</span>
+----------------------------------------------------------------------
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, in wrapped
+    <span class="k">return</span> method<span class="o">(</span>instance, *args, **params, **kwargs<span class="o">)</span>
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, in test_dog_name_msg_and_params
+    self.assertEqual<span class="o">(</span>dog.name, name + <span class="s1">&#39;fail&#39;</span><span class="o">)</span>
+AssertionError: <span class="s1">&#39;Bruce&#39;</span> !<span class="o">=</span> <span class="s1">&#39;Brucefail&#39;</span>
+- Bruce
++ Brucefail
+?      ++++
+
+
+<span class="o">======================================================================</span>
+FAIL: test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> <span class="o">[</span>Name is Peneloope<span class="o">]</span> <span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Penelope&#39;</span><span class="o">)</span>
+----------------------------------------------------------------------
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, in wrapped
+    <span class="k">return</span> method<span class="o">(</span>instance, *args, **params, **kwargs<span class="o">)</span>
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, in test_dog_name_msg_and_params
+    self.assertEqual<span class="o">(</span>dog.name, name + <span class="s1">&#39;fail&#39;</span><span class="o">)</span>
+AssertionError: <span class="s1">&#39;Penelope&#39;</span> !<span class="o">=</span> <span class="s1">&#39;Penelopefail&#39;</span>
+- Penelope
++ Penelopefail
+?         ++++
+
+
+----------------------------------------------------------------------
+Ran <span class="m">1</span> <span class="nb">test</span> in <span class="m">0</span>.001s
+
+FAILED <span class="o">(</span><span class="nv">failures</span><span class="o">=</span><span class="m">2</span><span class="o">)</span>
+</code></pre></div>
+
+
+<h2>Fixtures</h2>
+<p>Fixtures are a neat way to reuse code across tests. I didn't think a direct translation of pytest fixtures is appropriate
+when working mostly in TestCase classes. Instead, <a href="https://docs.python.org/3/howto/descriptor.html">descriptor</a> based 
+declarative classes seems to fit the style. Borrowing the term "scope" from pytest, I introduce a <a href="https://github.com/massover/unittestplus/blob/master/unittestplus.py#L77">TestCasePlus</a> 
+TestCase that handles the fixture initialization for both <code>setUp</code> and <code>setUpClass</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Fixture</span><span class="p">:</span>
+    <span class="n">FUNC_SCOPE</span> <span class="o">=</span> <span class="s1">&#39;func&#39;</span>
+    <span class="n">CLASS_SCOPE</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">FUNC_SCOPE</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">scope</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CLASS_SCOPE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FUNC_SCOPE</span><span class="p">],</span> \
+            <span class="sa">f</span><span class="s2">&quot;Invalid scope choice: </span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">owner</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">instance</span><span class="o">.</span><span class="n">_class_fixtures_cache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">_class_fixtures_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span> <span class="o">=</span> <span class="bp">self</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fixture</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">__set_name__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+
+<span class="k">def</span> <span class="nf">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="n">Fixture</span><span class="o">.</span><span class="n">FUNC_SCOPE</span><span class="p">):</span>
+    <span class="n">default_scope</span> <span class="o">=</span> <span class="n">scope</span>
+
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">scope</span> <span class="o">=</span> <span class="n">scope</span> <span class="ow">or</span> <span class="n">default_scope</span>
+            <span class="k">return</span> <span class="n">Fixture</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapped</span>
+
+    <span class="k">return</span> <span class="n">inner</span>
+
+<span class="nd">@fixture</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">penelope_fixture</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Dog</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Penelope&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">TestFixtureDecorator</span><span class="p">(</span><span class="n">TestCasePlus</span><span class="p">):</span>
+    <span class="n">penelope</span> <span class="o">=</span> <span class="n">penelope_fixture</span><span class="p">()</span>
+    <span class="n">penelope_class</span> <span class="o">=</span> <span class="n">penelope_fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_penelope_fixture</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">penelope</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">penelope_fixture</span><span class="p">()()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># test the side effect that function based fixtures are recreated on setup</span>
+        <span class="c1"># this relies on the named order of the test cases.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">penelope</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;lol&#39;</span>
+
+    <span class="k">def</span> <span class="nf">test_penelope_fixture_is_recreated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">penelope</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">penelope_fixture</span><span class="p">()()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_penelope_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">penelope_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">penelope_fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">)()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1"># test the side effect that function based fixtures are recreated on setup</span>
+        <span class="c1"># this relies on the named order of the test cases.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">penelope_class</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;lol&#39;</span>
+
+    <span class="k">def</span> <span class="nf">test_penelope_class_was_modified</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">penelope_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;lol&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
+test_penelope_class <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
+test_penelope_class_was_modified <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
+test_penelope_fixture <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
+test_penelope_fixture_is_recreated <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
+
+----------------------------------------------------------------------
+Ran <span class="m">4</span> tests in <span class="m">0</span>.000s
+
+OK
+</code></pre></div>
+
+
+<p>This code only scratches the surface of what pytest implements. If you go further, you'll find the stdlib hard to extend
+for things like plugins, cli, complex nested and session based fixtures, assertion re-writing, to name a few. Would you
+ever choose unittest over pytest and why? </p></section>
+
+</article>
+
+        <footer>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+        </footer>
+
+</body>
+</html>
