@@ -7,7 +7,7 @@ Hopefully it's easy to get up and running with real time toasts.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; None of this code has been run in a production environment.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="demo" src="./images/demo.gif"&gt;&lt;/p&gt;
 &lt;h2&gt;The implementation&lt;/h2&gt;
-&lt;p&gt;There are 3 parts:&lt;/p&gt;
+&lt;p&gt;There are 4 parts:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;A backend &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"&gt;SSE&lt;/a&gt; stream of toasts.&lt;/li&gt;
 &lt;li&gt;A backend endpoint to acknowledge toasts.&lt;/li&gt;
