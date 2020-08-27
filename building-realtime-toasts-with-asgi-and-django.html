@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Joshua Massover's Personal Blog : Building realtime toasts with ASGI and Django</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://www.massover.com/theme/css/tufte.min.css" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pygments-css@1.0.0/github.css" type="text/css" />
+        <link href="https://www.massover.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joshua Massover's Personal Blog ATOM Feed" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+<h1><a href="https://www.massover.com" id="site-title">Joshua Massover's Personal Blog </a></h1>
+<header>
+    <h2><a href="https://www.massover.com/building-realtime-toasts-with-asgi-and-django.html" id="page-title">Building realtime toasts with ASGI and Django</a></h2>
+<time datetime="2020-08-24T08:00:00-04:00">Mon 24 August 2020</time></header>
+<article>
+    <section><p>This was my first attempt to build something using ASGI and Django. I compiled some of my asgi utils into a repo <a href="https://github.com/massover/dj-asgi-utils">dj-asgi-utils</a>.
+It is not on pypi at the moment. If you want to skip to using the code, follow the <a href="https://github.com/massover/dj-asgi-utils#toasts">toasts section</a> of the readme.
+Hopefully it's easy to get up and running with real time toasts.</p>
+<p><strong>Note</strong> None of this code has been run in a production environment.</p>
+<p><img alt="demo" src="./images/demo.gif"></p>
+<h2>The implementation</h2>
+<p>There are 3 parts:</p>
+<ol>
+<li>A backend <a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">SSE</a> stream of toasts.</li>
+<li>A backend endpoint to acknowledge toasts.</li>
+<li>A way to serve toast javascript and css in html responses.</li>
+<li>A way to programmatically create toasts.</li>
+</ol>
+<h2>A backend stream of toasts</h2>
+<p>Classes from <a href="https://github.com/massover/dj-asgi-utils/tree/master/dj_asgi_utils/core">dj_asgi_utils.core</a> are used to build our
+SSE event stream, including <code>AsyncStreamingHttpResponse</code>, <code>ASGIHandler</code>, and <code>sse</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">dj_asgi_utils.core</span> <span class="kn">import</span> <span class="n">sse</span>
+<span class="kn">from</span> <span class="nn">dj_asgi_utils.core.responses</span> <span class="kn">import</span> <span class="n">AysncStreamingHttpResponse</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">toast_stream</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">toasts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">async_toasts</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">ToastSerializer</span><span class="p">(</span><span class="n">toasts</span><span class="p">,</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">sse</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="s2">&quot;toast&quot;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">toast_stream_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">toast_stream</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">AysncStreamingHttpResponse</span><span class="p">(</span>
+        <span class="n">streaming_content</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/event-stream&quot;</span>
+    <span class="p">)</span>
+    <span class="n">response</span><span class="p">[</span><span class="s2">&quot;Cache-Control&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;no-cache&quot;</span>
+    <span class="k">return</span> <span class="n">response</span>
+</code></pre></div>
+
+
+<p><strong>Can you use the ORM?</strong></p>
+<p>Yes you can with the <a href="https://docs.djangoproject.com/en/3.1/topics/async/#asgiref.sync.sync_to_async">sync_to_async</a> 
+wrapper. The example from the documentation seems rather straight forward.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@sync_to_async</span>
+<span class="k">def</span> <span class="nf">get_blog</span><span class="p">(</span><span class="n">pk</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>When I originally wrote the <code>async_toasts</code> function, the code looked roughly like:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@sync_to_async</span>
+<span class="k">def</span> <span class="nf">async_toasts</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Toast</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">read</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">some_async_view</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="n">toasts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">async_toasts</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="o">...</span>
+</code></pre></div>
+
+
+<p>If you called that view, you'd be greeted with a friendly <code>SynchronousOnlyOperation</code> exception. This exception is super helpful. It prevents
+us from shooting ourselves in the foot. If you're an experienced Django developer you probably rely heavily on lazy querysets. When working with
+the <code>sync_to_async</code> decorator, you need to evaluate your queryset before the coroutine returns. The example in the docs
+works because <code>get</code> is not lazy, it returns results immediately. The end goal is to allow the ORM itself to be async
+building upon an async driver but the support is not there yet.</p>
+<div class="highlight"><pre><span></span><code>Exception inside application: You cannot call this from an async context - use a thread or sync_to_async.
+Traceback (most recent call last):
+  File &quot;/lib/python3.7/site-packages/daphne/cli.py&quot;, line 30, in asgi
+    await self.app(scope, receive, send)
+  File &quot;/lib/python3.7/site-packages/django/contrib/staticfiles/handlers.py&quot;, line 96, in __call__
+    return await self.application(scope, receive, send)
+  File &quot;/dj_asgi_utils/core/handlers.py&quot;, line 48, in __call__
+    (self.listen_for_disconnect, {&quot;receive&quot;: receive}),
+  File &quot;/dj_asgi_utils/core/concurrency.py&quot;, line 9, in run_until_first_complete
+    [task.result() for task in done]
+  File &quot;/dj_asgi_utils/core/concurrency.py&quot;, line 9, in &lt;listcomp&gt;
+    [task.result() for task in done]
+  File &quot;/dj_asgi_utils/core/handlers.py&quot;, line 102, in send_response
+    async for part in response:
+  File &quot;/dj_asgi_utils/core/responses.py&quot;, line 11, in &lt;genexpr&gt;
+    self.make_bytes(chunk) async for chunk in streaming_content
+  File &quot;/dj_asgi_utils/toasts/streams.py&quot;, line 12, in toast_stream
+    yield sse(serializer.data, event=&quot;toast&quot;)
+  File &quot;/lib/python3.7/site-packages/rest_framework/serializers.py&quot;, line 760, in data
+    ret = super().data
+  File &quot;/lib/python3.7/site-packages/rest_framework/serializers.py&quot;, line 260, in data
+    self._data = self.to_representation(self.instance)
+  File &quot;/lib/python3.7/site-packages/rest_framework/serializers.py&quot;, line 678, in to_representation
+    self.child.to_representation(item) for item in iterable
+  File &quot;/lib/python3.7/site-packages/django/db/models/query.py&quot;, line 287, in __iter__
+    self._fetch_all()
+  File &quot;/lib/python3.7/site-packages/django/db/models/query.py&quot;, line 1303, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File &quot;/lib/python3.7/site-packages/django/db/models/query.py&quot;, line 53, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File &quot;/lib/python3.7/site-packages/django/db/models/sql/compiler.py&quot;, line 1152, in execute_sql
+    cursor = self.connection.cursor()
+  File &quot;/lib/python3.7/site-packages/django/utils/asyncio.py&quot;, line 24, in inner
+    raise SynchronousOnlyOperation(message)
+django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an async context - use a thread or sync_to_async.
+</code></pre></div>
+
+
+<h2>A backend endpoint to acknowledge toasts</h2>
+<p>APIs are way more fun to build with drf. We need a way for the user to acknolwedge the toast such that they dissapear
+from the stream. A <code>/toast/:id/read/</code> action endpoint with permissions only for the owner will do.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ToastViewSet</span><span class="p">(</span><span class="n">GenericViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Toast</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">ToastSerializer</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">IsOwner</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="nd">@action</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">])</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+        <span class="n">toast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+        <span class="n">toast</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">toast</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">toast</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2>A way to serve toast javascript and css</h2>
+<p>The easiest way is a <a href="https://github.com/massover/dj-asgi-utils/blob/master/dj_asgi_utils/toasts/middleware.py">middleware</a> that
+injects the necessary javascript and css onto html responses, similar to <code>django-debug-toolbar.</code> Do not be like me; 
+<a href="https://docs.djangoproject.com/en/3.1/topics/http/middleware/#asynchronous-support">read the docs</a> about
+asynchronous middleware. Removing all of the toast specific business logic, I started with a middleware 
+(installed in my <code>MIDDLEWARE</code> setting) and view.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">simple_middleware</span><span class="p">(</span><span class="n">get_response</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">middleware</span>
+
+<span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="s1">&#39;path.to.simple_middleware&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">toast_demo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">ToastForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">sleep_task</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Sleep running for at least </span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;sleep_time&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> second(s)...&quot;</span>
+            <span class="k">await</span> <span class="n">async_create_toast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;sleep_time&quot;</span><span class="p">])</span>
+            <span class="k">await</span> <span class="n">async_create_toast</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">],</span> <span class="n">user_id</span><span class="p">)</span>
+
+        <span class="n">user_id</span> <span class="o">=</span> <span class="k">await</span> <span class="n">get_user_id</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">sleep_task</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;toast-demo&quot;</span><span class="p">)</span>
+
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;form&quot;</span><span class="p">:</span> <span class="n">form</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;example/toast_demo.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The above code will hang forever, here, when awaiting from the first <code>async_create_toast</code> function. </p>
+<div class="highlight"><pre><span></span><code>&gt; /usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py(970)_bootstrap_inner()
+    969             with _active_limbo_lock:
+--&gt; 970                 try:
+    971                     # We don&#39;t call self._delete() because it also
+</code></pre></div>
+
+
+<p>While I don't understand exactly why the above is hanging, the <a href="https://docs.djangoproject.com/en/3.1/topics/http/middleware/#asynchronous-support">async middleware docs</a>
+provide the necessary decorators in order to create async middleware. In the case of async only, the middleware
+can be:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@async_only_middleware</span>
+<span class="k">def</span> <span class="nf">simple_middleware</span><span class="p">(</span><span class="n">get_response</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">get_response</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">middleware</span>
+</code></pre></div>
+
+
+<h2>Creating toasts</h2>
+<p>Toasts are created programmatically in either async or sync code. If you were in a pure async view, you'd use the async function. 
+If you were testing using <code>./manage.py shell</code> to create some toasts, you'd use the sync function. Once toasts
+are created, they would be available over the stream if the user is connected, until they are acknowledged.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@sync_to_async</span>
+<span class="k">def</span> <span class="nf">async_create_toast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">Toast</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">def</span> <span class="nf">create_toast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">Toast</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj</span>
+</code></pre></div>
+
+
+<p>While some edges might still be rough around ASGI, it seems like a great foundation has been set up to both protect us 
+and build upon. Have you started building anything with ASGI?</p></section>
+
+</article>
+
+        <footer>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+        </footer>
+
+</body>
+</html>
