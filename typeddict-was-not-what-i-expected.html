@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Joshua Massover's Personal Blog : TypedDict was not what I expected</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://www.massover.com/theme/css/tufte.min.css" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pygments-css@1.0.0/github.css" type="text/css" />
+        <link href="https://www.massover.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joshua Massover's Personal Blog ATOM Feed" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+<h1><a href="https://www.massover.com" id="site-title">Joshua Massover's Personal Blog </a></h1>
+<header>
+    <h2><a href="https://www.massover.com/typeddict-was-not-what-i-expected.html" id="page-title">TypedDict was not what I expected</a></h2>
+<time datetime="2021-02-07T10:53:00-05:00">Sun 07 February 2021</time></header>
+<article>
+    <section><h2>Example TypedDict</h2>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+
+
+<h2>I expected it to work like a dataclass</h2>
+<p>If I didn't provide class attributes to the constructor, I expected
+it to error at runtime.</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+   <span class="o">...</span><span class="p">:</span>     <span class="n">email</span><span class="p">:</span> <span class="nb">str</span>
+   <span class="o">...</span><span class="p">:</span> 
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">7</span><span class="p">]:</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">user</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="s1">&#39;John&#39;</span>
+</code></pre></div>
+
+
+<p>At first this seemed unhelpful. However the issue here is mostly with my understanding and usage of type hinting. It doesn't
+need to error at runtime. That's the purpose of catching this via typing hinting using mypy.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># main.py</span>
+<span class="kn">from</span> <span class="nn">user</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span>
+        <span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
+        <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+
+
+<hr>
+<div class="highlight"><pre><span></span><code>mypy main.py
+
+main.py:11: error: Missing key <span class="s1">&#39;email&#39;</span> <span class="k">for</span> TypedDict <span class="s2">&quot;User&quot;</span>
+Found <span class="m">1</span> error in <span class="m">1</span> file <span class="o">(</span>checked <span class="m">1</span> <span class="nb">source</span> file<span class="o">)</span>
+</code></pre></div>
+
+
+<h2>I expected it to behave like a normal class</h2>
+<p>I wanted to add a method to the class.</p>
+<div class="highlight"><pre><span></span><code><span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="n">email</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">get_full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="o">...</span><span class="p">:</span> 
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s2">&quot;john.smith@example.com&quot;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span>
+<span class="o">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span>                            <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="n">d64390302591</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span><span class="p">:</span> <span class="s1">&#39;dict&#39;</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s1">&#39;get_full_name&#39;</span>
+</code></pre></div>
+
+
+<p>The <a href="https://www.python.org/dev/peps/pep-0589/#class-based-syntax">docs</a> talk about the restrictions of the
+class based syntax, including</p>
+<blockquote>
+<p>Methods are not allowed, since the runtime type of a TypedDict object will always be just dict (it is never a subclass of dict).</p>
+</blockquote>
+<p>Now I understand why the docs focus on this example, and only show the callable class example later. </p>
+<div class="highlight"><pre><span></span><code><span class="n">movie</span><span class="p">:</span> <span class="n">Movie</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Blade Runner&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">1982</span><span class="p">}</span>
+</code></pre></div>
+
+
+<p>As in the name, <code>TypedDict</code> has its use for adding type hints to dicts.</p></section>
+
+</article>
+
+        <footer>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+        </footer>
+
+</body>
+</html>
