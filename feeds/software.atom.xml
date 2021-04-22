@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog - software</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/software.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2021-04-21T08:48:00-04:00</updated><entry><title>Now Is Better Than Earlier</title><link href="https://www.massover.com/now-is-better-than-earlier.html" rel="alternate"></link><published>2021-04-21T08:48:00-04:00</published><updated>2021-04-21T08:48:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2021-04-21:/now-is-better-than-earlier.html</id><summary type="html">&lt;p&gt;I have never been in an organization that nailed two of the hardest parts of software development, defining requirements and excellent communication. I find that once things go wrong, it's easy to look back in hindsight and wish that we did everything earlier:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Why weren't those requirements defined earlier!?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;[insert …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I have never been in an organization that nailed two of the hardest parts of software development, defining requirements and excellent communication. I find that once things go wrong, it's easy to look back in hindsight and wish that we did everything earlier:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Why weren't those requirements defined earlier!?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;[insert comment about agile]&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Why didn't we bring in the team to get their feedback ealier!? &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;[insert comment about waterfall]&lt;/p&gt;
+&lt;p&gt;Yet we never seem to do it early enough. We will always uncover things we didn't know we didn't know. These unknowns will have a cascading affect. The best requirements aren't defined earlier, they're the requirements we have defined now. The best communication isn't from earlier, but the communication that we have the time to give now, act on now, 
+and continue to work on now.&lt;/p&gt;
+&lt;p&gt;We didn't understand enough earlier but we did our best. Now is better than earlier.&lt;/p&gt;</content><category term="software"></category></entry></feed>
