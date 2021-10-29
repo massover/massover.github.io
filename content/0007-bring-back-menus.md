@@ -1,5 +1,5 @@
 Title: Bring back print menus
-Date: 2021-10-28 10:43
+Date: 2021-10-27 07:00
 Category: Life
 
 Print menus are great. A lot of effort and thought usually goes into the menu organization and presentation. 
