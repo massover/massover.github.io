@@ -8,7 +8,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In isolation, is there any way to know &lt;strong&gt;EXACTLY&lt;/strong&gt; what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
+&lt;p&gt;In isolation, is there any way to know what type &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Start with an innocuous log statement and the corresponding generated json formatted logs&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Fetch user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -18,7 +18,7 @@ formatted. By …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Start with an
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In isolation, is there any way to know &lt;strong&gt;EXACTLY&lt;/strong&gt; what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
+&lt;p&gt;In isolation, is there any way to know what type &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -29,7 +29,7 @@ formatted. By default there is no json serialization for a UUID. UUIDs are usual
 
 &lt;p&gt;From just the log statement, we lose context about whether &lt;code&gt;id&lt;/code&gt; is &lt;code&gt;"0d45a880-6c1f-4ad9-b0b9-2546e443706e"&lt;/code&gt; or 
 &lt;code&gt;UUID('0d45a880-6c1f-4ad9-b0b9-2546e443706e')&lt;/code&gt;. When dealing with systems interacting with json, both of these
-are going to be valid use cases. Any non default json serializable type (another example would be a timestamp) type would 
+are going to be valid use cases. Any non default json serializable type (another example would be a timestamp) would 
 suffer from this ambiguity.&lt;/p&gt;
 &lt;p&gt;The logs don't lie. Sometimes we do need to stretch the truth.&lt;/p&gt;</content><category term="python"></category></entry><entry><title>Bring back print menus</title><link href="https://www.massover.com/bring-back-print-menus.html" rel="alternate"></link><published>2021-10-27T07:00:00-04:00</published><updated>2021-10-27T07:00:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2021-10-27:/bring-back-print-menus.html</id><summary type="html">&lt;p&gt;Print menus are great. A lot of effort and thought usually goes into the menu organization and presentation. 
 When I load a menu from a QR code, I often get a pdf. I find a pdf awkward to navigate. It's not even the

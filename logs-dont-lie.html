@@ -25,7 +25,7 @@
 </code></pre></div>
 
 
-<p>In isolation, is there any way to know <strong>EXACTLY</strong> what <code>id</code> is? Unfortunately there really isn't. What's missing is how the logs get 
+<p>In isolation, is there any way to know what type <code>id</code> is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.</p>
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
@@ -36,7 +36,7 @@ formatted. By default there is no json serialization for a UUID. UUIDs are usual
 
 <p>From just the log statement, we lose context about whether <code>id</code> is <code>"0d45a880-6c1f-4ad9-b0b9-2546e443706e"</code> or 
 <code>UUID('0d45a880-6c1f-4ad9-b0b9-2546e443706e')</code>. When dealing with systems interacting with json, both of these
-are going to be valid use cases. Any non default json serializable type (another example would be a timestamp) type would 
+are going to be valid use cases. Any non default json serializable type (another example would be a timestamp) would 
 suffer from this ambiguity.</p>
 <p>The logs don't lie. Sometimes we do need to stretch the truth.</p></section>
 
