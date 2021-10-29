@@ -8,7 +8,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In isolation, is there any way to know exactly what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
+&lt;p&gt;In isolation, is there any way to know &lt;strong&gt;EXACTLY&lt;/strong&gt; what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Start with an innocuous log statement and the corresponding generated json formatted logs&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Fetch user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -18,7 +18,7 @@ formatted. By …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Start with an
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In isolation, is there any way to know exactly what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
+&lt;p&gt;In isolation, is there any way to know &lt;strong&gt;EXACTLY&lt;/strong&gt; what &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
 &lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;

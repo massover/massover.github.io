@@ -25,7 +25,7 @@
 </code></pre></div>
 
 
-<p>In isolation, is there any way to know exactly what <code>id</code> is? Unfortunately there really isn't. What's missing is how the logs get 
+<p>In isolation, is there any way to know <strong>EXACTLY</strong> what <code>id</code> is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.</p>
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
