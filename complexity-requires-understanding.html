@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Joshua Massover's Personal Blog : Complexity requires understanding</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://www.massover.com/theme/css/tufte.min.css" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pygments-css@1.0.0/github.css" type="text/css" />
+        <link href="https://www.massover.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Joshua Massover's Personal Blog ATOM Feed" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+<h1><a href="https://www.massover.com" id="site-title">Joshua Massover's Personal Blog </a></h1>
+<header>
+    <h2><a href="https://www.massover.com/complexity-requires-understanding.html" id="page-title">Complexity requires understanding</a></h2>
+<time datetime="2022-01-07T11:05:00-05:00">Fri 07 January 2022</time></header>
+<article>
+    <section><p>I generate yaml files for <a href="https://swagger.io/specification/">Open API Schemas</a>. These Open API schemas are often dynamically
+generated from something like <a href="https://www.django-rest-framework.org/api-guide/schemas/#generating-an-openapi-schema">django rest framework</a>.
+Deep in the <a href="https://github.com/encode/django-rest-framework/blob/master/rest_framework/schemas/openapi.py#L119">schema code</a>, I
+was adding an <code>example</code> such that a fixture would appear in the documentation. This resulted in a yaml schema that 
+was not renderable by <a href="https://github.com/Redocly/redoc">Redoc</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">rest_framework.schemas.openapi</span> <span class="kn">import</span> <span class="n">SchemaGenerator</span>
+
+<span class="k">class</span> <span class="nc">MySchemaGenerator</span><span class="p">(</span><span class="n">SchemaGenerator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_responses</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;fixture&quot;</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">[</span><span class="s2">&quot;200&quot;</span><span class="p">][</span><span class="s2">&quot;content&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">value</span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                    <span class="s2">&quot;example&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()},</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Use the example for the schema structure.&quot;</span><span class="p">,</span>
+                <span class="p">}</span>
+        <span class="k">return</span> <span class="n">responses</span>
+</code></pre></div>
+
+
+<p>A <code>UUID</code> is serializable in yaml, but not in a helpful way when generating an open api schema.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">yaml</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">uuid</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="s1">&#39;id: !!python/object:uuid.UUID</span><span class="se">\n</span><span class="s1">  int: 132234147215218020088149232009421531513</span><span class="se">\n</span><span class="s1">&#39;</span>
+</code></pre></div>
+
+
+<p>This serialization problem exists with <code>json</code> as well although json raises a runtime error.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">json</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="o">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="mi">1</span><span class="n">a41a0b88650</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="o">...</span>
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">Object</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">UUID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">JSON</span> <span class="n">serializable</span>
+</code></pre></div>
+
+
+<p>This problem is solved for <code>json</code> by creating a custom <code>json.JSONEncoder</code> that can handle complex types</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="k">class</span> <span class="nc">MyJSONEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">MyJSONEncoder</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;{&quot;id&quot;: &quot;8a743995-54d6-46bd-bc37-39ce46558b46&quot;}&#39;</span>
+</code></pre></div>
+
+
+<p>My initial thoughts about the same for <code>yaml</code> were that it was too complex. I needed to learn about 
+<code>dumpers</code>, <code>representers</code>, <code>scalers</code> and <code>nodes</code> just to call <code>str</code> around some value that needed to be serialized.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="k">def</span> <span class="nf">uuid_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_str</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">,</span> <span class="n">uuid_representer</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">result</span>
+<span class="s1">&#39;id: 637b5ed1-2c57-47d1-aa28-9d586f902979</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+ <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;637b5ed1-2c57-47d1-aa28-9d586f902979&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+
+<p><code>yaml</code> also has the ability to encode the context required for complex object deserialization.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+
+<span class="k">def</span> <span class="nf">uuid_representer</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_scalar</span><span class="p">(</span><span class="s1">&#39;!uuid&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">uuid_constructor</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+     <span class="n">value</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">construct_scalar</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+     <span class="k">return</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">,</span> <span class="n">uuid_representer</span><span class="p">)</span>
+<span class="n">yaml</span><span class="o">.</span><span class="n">add_constructor</span><span class="p">(</span><span class="s1">&#39;!uuid&#39;</span><span class="p">,</span> <span class="n">uuid_constructor</span><span class="p">)</span>
+</code></pre></div>
+
+
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">id</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">result</span>
+<span class="s2">&quot;id: !uuid &#39;2c3b217e-c52f-4af5-9190-ed42f1274945&#39;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;2c3b217e-c52f-4af5-9190-ed42f1274945&#39;</span><span class="p">)}</span>
+</code></pre></div>
+
+
+<p>Unfortunately, it doesn't have a benefit for open api. Since <code>uuid</code> is not part of the open api spec, none of the clients
+such as <code>Redoc</code> would know how to deserialize my custom <code>uuid</code> encoding. </p>
+<p>While my first thought was that it was too complex to perform the uuid serialization in <code>yaml</code>, now I understand some 
+more of the tradeoffs in the spec which drive the implementation. Have you used any custom serialization or deserialization with <code>yaml</code>?</p></section>
+
+</article>
+
+        <footer>
+            <nav>
+                <ul>
+                </ul>
+            </nav>
+        </footer>
+
+</body>
+</html>
