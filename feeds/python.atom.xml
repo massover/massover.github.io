@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog - python</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/python.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2022-01-07T11:05:00-05:00</updated><entry><title>Complexity requires understanding</title><link href="https://www.massover.com/complexity-requires-understanding.html" rel="alternate"></link><published>2022-01-07T11:05:00-05:00</published><updated>2022-01-07T11:05:00-05:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2022-01-07:/complexity-requires-understanding.html</id><summary type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;Open API Schemas&lt;/a&gt;. These Open API schemas are often dynamically
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog - python</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/python.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2022-01-07T11:05:00-05:00</updated><entry><title>Complexity requires understanding</title><link href="https://www.massover.com/complexity-requires-understanding.html" rel="alternate"></link><published>2022-01-07T11:05:00-05:00</published><updated>2022-01-07T11:05:00-05:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2022-01-07:/complexity-requires-understanding.html</id><summary type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;OpenAPI schemas&lt;/a&gt;. These OpenAPI schemas are often dynamically
 generated from something like &lt;a href="https://www.django-rest-framework.org/api-guide/schemas/#generating-an-openapi-schema"&gt;django rest framework&lt;/a&gt;.
 Deep in the &lt;a href="https://github.com/encode/django-rest-framework/blob/master/rest_framework/schemas/openapi.py#L119"&gt;schema code&lt;/a&gt;, I
 was adding an &lt;code&gt;example&lt;/code&gt; such that a fixture would appear in the documentation. This resulted in a yaml schema that 
-was not …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;Open API Schemas&lt;/a&gt;. These Open API schemas are often dynamically
+was not renderable by …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;OpenAPI schemas&lt;/a&gt;. These OpenAPI schemas are often dynamically
 generated from something like &lt;a href="https://www.django-rest-framework.org/api-guide/schemas/#generating-an-openapi-schema"&gt;django rest framework&lt;/a&gt;.
 Deep in the &lt;a href="https://github.com/encode/django-rest-framework/blob/master/rest_framework/schemas/openapi.py#L119"&gt;schema code&lt;/a&gt;, I
 was adding an &lt;code&gt;example&lt;/code&gt; such that a fixture would appear in the documentation. This resulted in a yaml schema that 
@@ -27,7 +27,7 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;A &lt;code&gt;UUID&lt;/code&gt; is serializable in yaml, but not in a helpful way when generating an open api schema.&lt;/p&gt;
+&lt;p&gt;A &lt;code&gt;UUID&lt;/code&gt; is serializable in yaml, but not in a helpful way when generating an OpenAPI schema.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;yaml&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;uuid&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt;
@@ -65,7 +65,7 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;My initial thoughts about the same for &lt;code&gt;yaml&lt;/code&gt; were that it was too complex. I needed to learn about 
+&lt;p&gt;My initial thoughts about the encoder for &lt;code&gt;yaml&lt;/code&gt; were that it was too complex. I needed to learn about 
 &lt;code&gt;dumpers&lt;/code&gt;, &lt;code&gt;representers&lt;/code&gt;, &lt;code&gt;scalers&lt;/code&gt; and &lt;code&gt;nodes&lt;/code&gt; just to call &lt;code&gt;str&lt;/code&gt; around some value that needed to be serialized.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;yaml&lt;/span&gt;
 
@@ -111,7 +111,7 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Unfortunately, it doesn't have a benefit for open api. Since &lt;code&gt;uuid&lt;/code&gt; is not part of the open api spec, none of the clients
+&lt;p&gt;Unfortunately, it doesn't have a benefit for OpenAPI. Since &lt;code&gt;uuid&lt;/code&gt; is not part of the OpenAPI spec, none of the clients
 such as &lt;code&gt;Redoc&lt;/code&gt; would know how to deserialize my custom &lt;code&gt;uuid&lt;/code&gt; encoding. &lt;/p&gt;
 &lt;p&gt;While my first thought was that it was too complex to perform the uuid serialization in &lt;code&gt;yaml&lt;/code&gt;, now I understand some 
 more of the tradeoffs in the spec which drive the implementation. Have you ever misjudged complexity from a lack of understanding?&lt;/p&gt;</content><category term="python"></category></entry><entry><title>Logs don't lie</title><link href="https://www.massover.com/logs-dont-lie.html" rel="alternate"></link><published>2021-10-28T10:43:00-04:00</published><updated>2021-10-28T10:43:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2021-10-28:/logs-dont-lie.html</id><summary type="html">&lt;p&gt;Start with an innocuous log statement and the corresponding generated json formatted logs&lt;/p&gt;
