@@ -56,16 +56,14 @@ function discoverable and we can use the existing test case assertions.</p>
     <span class="n">test</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dog</span><span class="o">.</span><span class="n">age</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
 test_dog_age <span class="o">(</span>unittestplus.TestCase__test_dog_age<span class="o">)</span> ... ok
 
 ----------------------------------------------------------------------
-Ran <span class="m">1</span> <span class="nb">test</span> in <span class="m">0</span>.000s
+Ran <span class="m">1</span> <span class="nb">test</span> <span class="k">in</span> <span class="m">0</span>.000s
 
 OK
 </code></pre></div>
-
 
 <h2>Parametrization</h2>
 <p><a href="https://docs.pytest.org/en/stable/parametrize.html">Parametrization</a> in pytest is great. The stdlib already has 
@@ -98,16 +96,15 @@ can make for some similar syntactical sugar. Personally, I prefer the decorator 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">dog</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;fail&quot;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
 test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> ... 
 <span class="o">======================================================================</span>
 FAIL: test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> <span class="o">[</span>Name is Bruce<span class="o">]</span> <span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Bruce&#39;</span><span class="o">)</span>
 ----------------------------------------------------------------------
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, in wrapped
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, <span class="k">in</span> wrapped
     <span class="k">return</span> method<span class="o">(</span>instance, *args, **params, **kwargs<span class="o">)</span>
-  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, in test_dog_name_msg_and_params
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, <span class="k">in</span> test_dog_name_msg_and_params
     self.assertEqual<span class="o">(</span>dog.name, name + <span class="s1">&#39;fail&#39;</span><span class="o">)</span>
 AssertionError: <span class="s1">&#39;Bruce&#39;</span> !<span class="o">=</span> <span class="s1">&#39;Brucefail&#39;</span>
 - Bruce
@@ -119,9 +116,9 @@ AssertionError: <span class="s1">&#39;Bruce&#39;</span> !<span class="o">=</span
 FAIL: test_dog_name_msg_and_params <span class="o">(</span>test_example.TestDog<span class="o">)</span> <span class="o">[</span>Name is Peneloope<span class="o">]</span> <span class="o">(</span><span class="nv">name</span><span class="o">=</span><span class="s1">&#39;Penelope&#39;</span><span class="o">)</span>
 ----------------------------------------------------------------------
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, in wrapped
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&quot;</span>, line <span class="m">19</span>, <span class="k">in</span> wrapped
     <span class="k">return</span> method<span class="o">(</span>instance, *args, **params, **kwargs<span class="o">)</span>
-  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, in test_dog_name_msg_and_params
+  File <span class="s2">&quot;/Users/joshmassover/Development/unittestplus/test_example.py&quot;</span>, line <span class="m">46</span>, <span class="k">in</span> test_dog_name_msg_and_params
     self.assertEqual<span class="o">(</span>dog.name, name + <span class="s1">&#39;fail&#39;</span><span class="o">)</span>
 AssertionError: <span class="s1">&#39;Penelope&#39;</span> !<span class="o">=</span> <span class="s1">&#39;Penelopefail&#39;</span>
 - Penelope
@@ -130,11 +127,10 @@ AssertionError: <span class="s1">&#39;Penelope&#39;</span> !<span class="o">=</s
 
 
 ----------------------------------------------------------------------
-Ran <span class="m">1</span> <span class="nb">test</span> in <span class="m">0</span>.001s
+Ran <span class="m">1</span> <span class="nb">test</span> <span class="k">in</span> <span class="m">0</span>.001s
 
 FAILED <span class="o">(</span><span class="nv">failures</span><span class="o">=</span><span class="m">2</span><span class="o">)</span>
 </code></pre></div>
-
 
 <h2>Fixtures</h2>
 <p>Fixtures are a neat way to reuse code across tests. I didn't think a direct translation of pytest fixtures is appropriate
@@ -211,7 +207,6 @@ TestCase that handles the fixture initialization for both <code>setUp</code> and
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">penelope_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;lol&#39;</span><span class="p">)</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code>python3 -m unittest discover -v 
 test_penelope_class <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
 test_penelope_class_was_modified <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
@@ -219,11 +214,10 @@ test_penelope_fixture <span class="o">(</span>test_example.TestFixtureDecorator<
 test_penelope_fixture_is_recreated <span class="o">(</span>test_example.TestFixtureDecorator<span class="o">)</span> ... ok
 
 ----------------------------------------------------------------------
-Ran <span class="m">4</span> tests in <span class="m">0</span>.000s
+Ran <span class="m">4</span> tests <span class="k">in</span> <span class="m">0</span>.000s
 
 OK
 </code></pre></div>
-
 
 <p>This code only scratches the surface of what pytest implements. If you go further, you'll find the stdlib hard to extend
 for things like plugins, cli, complex nested and session based fixtures, assertion re-writing, to name a few. Would you

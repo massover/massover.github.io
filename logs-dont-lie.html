@@ -20,10 +20,8 @@
 <div class="highlight"><pre><span></span><code><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Fetch user&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">})</span>
 </code></pre></div>
 
-
 <div class="highlight"><pre><span></span><code>{&quot;message&quot;: &quot;Fetch user&quot;, &quot;id&quot;: &quot;e8f468ec-007c-4b36-86a9-34c7bdb72a5f&quot;}
 </code></pre></div>
-
 
 <p>In isolation, is there any way to know what type <code>id</code> is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.</p>
@@ -32,7 +30,6 @@ formatted. By default there is no json serialization for a UUID. UUIDs are usual
     <span class="o">...</span>
 <span class="ne">TypeError</span><span class="p">:</span> <span class="n">Object</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">UUID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">JSON</span> <span class="n">serializable</span>
 </code></pre></div>
-
 
 <p>From just the log statement, we lose context about whether <code>id</code> is <code>"0d45a880-6c1f-4ad9-b0b9-2546e443706e"</code> or 
 <code>UUID('0d45a880-6c1f-4ad9-b0b9-2546e443706e')</code>. When dealing with systems interacting with json, both of these

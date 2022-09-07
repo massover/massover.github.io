@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/all.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2022-01-07T11:05:00-05:00</updated><entry><title>Complexity requires understanding</title><link href="https://www.massover.com/complexity-requires-understanding.html" rel="alternate"></link><published>2022-01-07T11:05:00-05:00</published><updated>2022-01-07T11:05:00-05:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2022-01-07:/complexity-requires-understanding.html</id><summary type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;OpenAPI schemas&lt;/a&gt;. These OpenAPI schemas are often dynamically
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Joshua Massover's Personal Blog</title><link href="https://www.massover.com/" rel="alternate"></link><link href="https://www.massover.com/feeds/all.atom.xml" rel="self"></link><id>https://www.massover.com/</id><updated>2022-09-06T19:41:00-04:00</updated><entry><title>Reorganizing my clothing</title><link href="https://www.massover.com/reorganizing-my-clothing.html" rel="alternate"></link><published>2022-09-06T19:41:00-04:00</published><updated>2022-09-06T19:41:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2022-09-06:/reorganizing-my-clothing.html</id><summary type="html">&lt;p&gt;Every few months I need to reorganize my clothing.&lt;/p&gt;
+&lt;p&gt;The drawers are no longer organized. I always fold my clothes and put them in a drawer; but when I can't find
+a pair of shorts I need for the gym, I'm unfolding a stack of shirts in the process.  &lt;/p&gt;
+&lt;p&gt;I …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Every few months I need to reorganize my clothing.&lt;/p&gt;
+&lt;p&gt;The drawers are no longer organized. I always fold my clothes and put them in a drawer; but when I can't find
+a pair of shorts I need for the gym, I'm unfolding a stack of shirts in the process.  &lt;/p&gt;
+&lt;p&gt;I take everything out of the dresser at once. I find some shorts I forget about. I'm excited to wear them again. I try a new folding method and everything is beautifully folded on the bed. I'll have so much more space in my drawers now. I reorganize the drawers. The athleisure should obviously all be in the same drawer. I finally know where everything is.&lt;/p&gt;
+&lt;p&gt;A few months later, the tidiness will fade. I'll have to reorganize again. For me, the reorganization is the easy part. The hard parts are:
+making sure I have the right dresser to hold all of my clothes and having the effort to properly fold and put away my clothes over time.&lt;/p&gt;</content><category term="Life"></category></entry><entry><title>Complexity requires understanding</title><link href="https://www.massover.com/complexity-requires-understanding.html" rel="alternate"></link><published>2022-01-07T11:05:00-05:00</published><updated>2022-01-07T11:05:00-05:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2022-01-07:/complexity-requires-understanding.html</id><summary type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;Open API Schemas&lt;/a&gt;. These Open API schemas are often dynamically
 generated from something like &lt;a href="https://www.django-rest-framework.org/api-guide/schemas/#generating-an-openapi-schema"&gt;django rest framework&lt;/a&gt;.
 Deep in the &lt;a href="https://github.com/encode/django-rest-framework/blob/master/rest_framework/schemas/openapi.py#L119"&gt;schema code&lt;/a&gt;, I
 was adding an &lt;code&gt;example&lt;/code&gt; such that a fixture would appear in the documentation. This resulted in a yaml schema that 
-was not renderable by …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;OpenAPI schemas&lt;/a&gt;. These OpenAPI schemas are often dynamically
+was not …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I generate yaml files for &lt;a href="https://swagger.io/specification/"&gt;Open API Schemas&lt;/a&gt;. These Open API schemas are often dynamically
 generated from something like &lt;a href="https://www.django-rest-framework.org/api-guide/schemas/#generating-an-openapi-schema"&gt;django rest framework&lt;/a&gt;.
 Deep in the &lt;a href="https://github.com/encode/django-rest-framework/blob/master/rest_framework/schemas/openapi.py#L119"&gt;schema code&lt;/a&gt;, I
 was adding an &lt;code&gt;example&lt;/code&gt; such that a fixture would appear in the documentation. This resulted in a yaml schema that 
@@ -26,15 +34,13 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;responses&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;A &lt;code&gt;UUID&lt;/code&gt; is serializable in yaml, but not in a helpful way when generating an OpenAPI schema.&lt;/p&gt;
+&lt;p&gt;A &lt;code&gt;UUID&lt;/code&gt; is serializable in yaml, but not in a helpful way when generating an open api schema.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;yaml&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;uuid&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="s1"&gt;&amp;#39;id: !!python/object:uuid.UUID&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;  int: 132234147215218020088149232009421531513&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This serialization problem exists with &lt;code&gt;json&lt;/code&gt; as well although json raises a runtime error.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
@@ -49,7 +55,6 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;span class="ne"&gt;TypeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt; &lt;span class="n"&gt;UUID&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;JSON&lt;/span&gt; &lt;span class="n"&gt;serializable&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;This problem is solved for &lt;code&gt;json&lt;/code&gt; by creating a custom &lt;code&gt;json.JSONEncoder&lt;/code&gt; that can handle complex types&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyJSONEncoder&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;JSONEncoder&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -59,13 +64,11 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;cls&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;MyJSONEncoder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{&amp;quot;id&amp;quot;: &amp;quot;8a743995-54d6-46bd-bc37-39ce46558b46&amp;quot;}&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;My initial thoughts about the encoder for &lt;code&gt;yaml&lt;/code&gt; were that it was too complex. I needed to learn about 
+&lt;p&gt;My initial thoughts about the same for &lt;code&gt;yaml&lt;/code&gt; were that it was too complex. I needed to learn about 
 &lt;code&gt;dumpers&lt;/code&gt;, &lt;code&gt;representers&lt;/code&gt;, &lt;code&gt;scalers&lt;/code&gt; and &lt;code&gt;nodes&lt;/code&gt; just to call &lt;code&gt;str&lt;/code&gt; around some value that needed to be serialized.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;yaml&lt;/span&gt;
 
@@ -75,14 +78,12 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_representer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UUID&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;uuid_representer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
 &lt;span class="s1"&gt;&amp;#39;id: 637b5ed1-2c57-47d1-aa28-9d586f902979&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;load&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
  &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;637b5ed1-2c57-47d1-aa28-9d586f902979&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;&lt;code&gt;yaml&lt;/code&gt; also has the ability to encode the context required for complex object deserialization.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;uuid&lt;/span&gt;
@@ -101,7 +102,6 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_constructor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;!uuid&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;uuid_constructor&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;uuid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uuid4&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;yaml&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dump&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
@@ -110,28 +110,23 @@ was not renderable by &lt;a href="https://github.com/Redocly/redoc"&gt;Redoc&lt;
 &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;UUID&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;2c3b217e-c52f-4af5-9190-ed42f1274945&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
-&lt;p&gt;Unfortunately, it doesn't have a benefit for OpenAPI. Since &lt;code&gt;uuid&lt;/code&gt; is not part of the OpenAPI spec, none of the clients
+&lt;p&gt;Unfortunately, it doesn't have a benefit for open api. Since &lt;code&gt;uuid&lt;/code&gt; is not part of the open api spec, none of the clients
 such as &lt;code&gt;Redoc&lt;/code&gt; would know how to deserialize my custom &lt;code&gt;uuid&lt;/code&gt; encoding. &lt;/p&gt;
 &lt;p&gt;While my first thought was that it was too complex to perform the uuid serialization in &lt;code&gt;yaml&lt;/code&gt;, now I understand some 
 more of the tradeoffs in the spec which drive the implementation. Have you ever misjudged complexity from a lack of understanding?&lt;/p&gt;</content><category term="python"></category></entry><entry><title>Logs don't lie</title><link href="https://www.massover.com/logs-dont-lie.html" rel="alternate"></link><published>2021-10-28T10:43:00-04:00</published><updated>2021-10-28T10:43:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2021-10-28:/logs-dont-lie.html</id><summary type="html">&lt;p&gt;Start with an innocuous log statement and the corresponding generated json formatted logs&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Fetch user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;{&amp;quot;message&amp;quot;: &amp;quot;Fetch user&amp;quot;, &amp;quot;id&amp;quot;: &amp;quot;e8f468ec-007c-4b36-86a9-34c7bdb72a5f&amp;quot;}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;In isolation, is there any way to know what type &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Start with an innocuous log statement and the corresponding generated json formatted logs&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;message&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Fetch user&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;{&amp;quot;message&amp;quot;: &amp;quot;Fetch user&amp;quot;, &amp;quot;id&amp;quot;: &amp;quot;e8f468ec-007c-4b36-86a9-34c7bdb72a5f&amp;quot;}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;In isolation, is there any way to know what type &lt;code&gt;id&lt;/code&gt; is? Unfortunately there really isn't. What's missing is how the logs get 
 formatted. By default there is no json serialization for a UUID. UUIDs are usually serialized to strings.&lt;/p&gt;
@@ -140,7 +135,6 @@ formatted. By default there is no json serialization for a UUID. UUIDs are usual
     &lt;span class="o"&gt;...&lt;/span&gt;
 &lt;span class="ne"&gt;TypeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt; &lt;span class="n"&gt;UUID&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;JSON&lt;/span&gt; &lt;span class="n"&gt;serializable&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;From just the log statement, we lose context about whether &lt;code&gt;id&lt;/code&gt; is &lt;code&gt;"0d45a880-6c1f-4ad9-b0b9-2546e443706e"&lt;/code&gt; or 
 &lt;code&gt;UUID('0d45a880-6c1f-4ad9-b0b9-2546e443706e')&lt;/code&gt;. When dealing with systems interacting with json, both of these
@@ -178,7 +172,6 @@ and continue to work on now.&lt;/p&gt;
     &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;h2&gt;I expected it to work like a dataclass&lt;/h2&gt;
 &lt;p&gt;If I didn't provide class attributes to the constructor, I expected
 it to error at runtime.&lt;/p&gt;
@@ -193,7 +186,6 @@ it to error at runtime.&lt;/p&gt;
     &lt;span class="n"&gt;last_name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
     &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;I expected it to work like a dataclass&lt;/h2&gt;
 &lt;p&gt;If I didn't provide class attributes to the constructor, I expected
@@ -210,7 +202,6 @@ it to error at runtime.&lt;/p&gt;
 &lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;John&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;At first this seemed unhelpful. However the issue here is mostly with my understanding and usage of type hinting. It doesn't
 need to error at runtime. That's the purpose of catching this via typing hinting using mypy.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# main.py&lt;/span&gt;
@@ -223,14 +214,12 @@ need to error at runtime. That's the purpose of catching this via typing hinting
     &lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;hr&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mypy main.py
 
 main.py:11: error: Missing key &lt;span class="s1"&gt;&amp;#39;email&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; TypedDict &lt;span class="s2"&gt;&amp;quot;User&amp;quot;&lt;/span&gt;
-Found &lt;span class="m"&gt;1&lt;/span&gt; error in &lt;span class="m"&gt;1&lt;/span&gt; file &lt;span class="o"&gt;(&lt;/span&gt;checked &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; file&lt;span class="o"&gt;)&lt;/span&gt;
+Found &lt;span class="m"&gt;1&lt;/span&gt; error &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; file &lt;span class="o"&gt;(&lt;/span&gt;checked &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; file&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;I expected it to behave like a normal class&lt;/h2&gt;
 &lt;p&gt;I wanted to add a method to the class.&lt;/p&gt;
@@ -253,7 +242,6 @@ Found &lt;span class="m"&gt;1&lt;/span&gt; error in &lt;span class="m"&gt;1&lt;/
 &lt;span class="ne"&gt;AttributeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dict&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="n"&gt;has&lt;/span&gt; &lt;span class="n"&gt;no&lt;/span&gt; &lt;span class="n"&gt;attribute&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;get_full_name&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The &lt;a href="https://www.python.org/dev/peps/pep-0589/#class-based-syntax"&gt;docs&lt;/a&gt; talk about the restrictions of the
 class based syntax, including&lt;/p&gt;
 &lt;blockquote&gt;
@@ -263,7 +251,6 @@ class based syntax, including&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;movie&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Movie&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Blade Runner&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                 &lt;span class="s1"&gt;&amp;#39;year&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1982&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;As in the name, &lt;code&gt;TypedDict&lt;/code&gt; has its use for adding type hints to dicts.&lt;/p&gt;</content><category term="python"></category></entry><entry><title>I Like Cheese</title><link href="https://www.massover.com/i-like-cheese.html" rel="alternate"></link><published>2021-01-31T10:43:00-05:00</published><updated>2021-01-31T10:43:00-05:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2021-01-31:/i-like-cheese.html</id><summary type="html">&lt;p&gt;As far as I can remember, I didn't eat cheese. I said I didn't like it.&lt;/p&gt;
 &lt;p&gt;I'll always remember waking up after a long night out. After all of my friends split, I could finally be myself. I knew what I wanted.
@@ -313,7 +300,6 @@ SSE event stream, including &lt;code&gt;AsyncStreamingHttpResponse&lt;/code&gt;,
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;&lt;strong&gt;Can you use the ORM?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Yes you can with the &lt;a href="https://docs.djangoproject.com/en/3.1/topics/async/#asgiref.sync.sync_to_async"&gt;sync_to_async&lt;/a&gt; 
 wrapper. The example from the documentation seems rather straight forward.&lt;/p&gt;
@@ -321,7 +307,6 @@ wrapper. The example from the documentation seems rather straight forward.&lt;/p
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_blog&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Blog&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select_related&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;author&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;pk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;When I originally wrote the &lt;code&gt;async_toasts&lt;/code&gt; function, the code looked roughly like:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nd"&gt;@sync_to_async&lt;/span&gt;
@@ -332,7 +317,6 @@ wrapper. The example from the documentation seems rather straight forward.&lt;/p
     &lt;span class="n"&gt;toasts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;await&lt;/span&gt; &lt;span class="n"&gt;async_toasts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="o"&gt;...&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;If you called that view, you'd be greeted with a friendly &lt;code&gt;SynchronousOnlyOperation&lt;/code&gt; exception. This exception is super helpful. It prevents
 us from shooting ourselves in the foot. If you're an experienced Django developer you probably rely heavily on lazy querysets. When working with
@@ -376,7 +360,6 @@ Traceback (most recent call last):
 django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an async context - use a thread or sync_to_async.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;h2&gt;A backend endpoint to acknowledge toasts&lt;/h2&gt;
 &lt;p&gt;APIs are way more fun to build with drf. We need a way for the user to acknolwedge the toast such that they dissapear
 from the stream. A &lt;code&gt;/toast/:id/read/&lt;/code&gt; action endpoint with permissions only for the owner will do.&lt;/p&gt;
@@ -395,7 +378,6 @@ from the stream. A &lt;code&gt;/toast/:id/read/&lt;/code&gt; action endpoint wit
         &lt;span class="n"&gt;serializer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_serializer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;toast&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serializer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;A way to serve toast javascript and css&lt;/h2&gt;
 &lt;p&gt;The easiest way is a &lt;a href="https://github.com/massover/dj-asgi-utils/blob/master/dj_asgi_utils/toasts/middleware.py"&gt;middleware&lt;/a&gt; that
@@ -433,14 +415,12 @@ asynchronous middleware. Removing all of the toast specific business logic, I st
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;example/toast_demo.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The above code will hang forever, here, when awaiting from the first &lt;code&gt;async_create_toast&lt;/code&gt; function. &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt; /usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py(970)_bootstrap_inner()
     969             with _active_limbo_lock:
 --&amp;gt; 970                 try:
     971                     # We don&amp;#39;t call self._delete() because it also
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;While I don't understand exactly why the above is hanging, the &lt;a href="https://docs.djangoproject.com/en/3.1/topics/http/middleware/#asynchronous-support"&gt;async middleware docs&lt;/a&gt;
 provide the necessary decorators in order to create async middleware. In the case of async only, the middleware
@@ -452,7 +432,6 @@ can be:&lt;/p&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;middleware&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;Creating toasts&lt;/h2&gt;
 &lt;p&gt;Toasts are created programmatically in either async or sync code. If you were in a pure async view, you'd use the async function. 
@@ -468,7 +447,6 @@ are created, they would be available over the stream if the user is connected, u
     &lt;span class="n"&gt;obj&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Toast&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;obj&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;While some edges might still be rough around ASGI, it seems like a great foundation has been set up to both protect us 
 and build upon. Have you started building anything with ASGI?&lt;/p&gt;</content><category term="Python"></category></entry><entry><title>I have a love hate relationship with pytest</title><link href="https://www.massover.com/i-have-a-love-hate-relationship-with-pytest.html" rel="alternate"></link><published>2020-07-04T10:43:00-04:00</published><updated>2020-07-04T10:43:00-04:00</updated><author><name>Joshua Massover</name></author><id>tag:www.massover.com,2020-07-04:/i-have-a-love-hate-relationship-with-pytest.html</id><summary type="html">&lt;p&gt;The community has spoken. If you're green fielding a python project, the best bet for your tests is using &lt;a href="https://docs.pytest.org/en/stable/"&gt;pytest&lt;/a&gt;.
@@ -513,16 +491,14 @@ function discoverable and we can use the existing test case assertions.&lt;/p&gt
     &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dog&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3 -m unittest discover -v 
 test_dog_age &lt;span class="o"&gt;(&lt;/span&gt;unittestplus.TestCase__test_dog_age&lt;span class="o"&gt;)&lt;/span&gt; ... ok
 
 ----------------------------------------------------------------------
-Ran &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; in &lt;span class="m"&gt;0&lt;/span&gt;.000s
+Ran &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.000s
 
 OK
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;Parametrization&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://docs.pytest.org/en/stable/parametrize.html"&gt;Parametrization&lt;/a&gt; in pytest is great. The stdlib already has 
@@ -555,16 +531,15 @@ can make for some similar syntactical sugar. Personally, I prefer the decorator 
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dog&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fail&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3 -m unittest discover -v 
 test_dog_name_msg_and_params &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestDog&lt;span class="o"&gt;)&lt;/span&gt; ... 
 &lt;span class="o"&gt;======================================================================&lt;/span&gt;
 FAIL: test_dog_name_msg_and_params &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestDog&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;Name is Bruce&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Bruce&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 ----------------------------------------------------------------------
 Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
-  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;19&lt;/span&gt;, in wrapped
+  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;19&lt;/span&gt;, &lt;span class="k"&gt;in&lt;/span&gt; wrapped
     &lt;span class="k"&gt;return&lt;/span&gt; method&lt;span class="o"&gt;(&lt;/span&gt;instance, *args, **params, **kwargs&lt;span class="o"&gt;)&lt;/span&gt;
-  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/test_example.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;46&lt;/span&gt;, in test_dog_name_msg_and_params
+  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/test_example.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;46&lt;/span&gt;, &lt;span class="k"&gt;in&lt;/span&gt; test_dog_name_msg_and_params
     self.assertEqual&lt;span class="o"&gt;(&lt;/span&gt;dog.name, name + &lt;span class="s1"&gt;&amp;#39;fail&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 AssertionError: &lt;span class="s1"&gt;&amp;#39;Bruce&amp;#39;&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Brucefail&amp;#39;&lt;/span&gt;
 - Bruce
@@ -576,9 +551,9 @@ AssertionError: &lt;span class="s1"&gt;&amp;#39;Bruce&amp;#39;&lt;/span&gt; !&lt
 FAIL: test_dog_name_msg_and_params &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestDog&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;Name is Peneloope&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Penelope&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 ----------------------------------------------------------------------
 Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
-  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;19&lt;/span&gt;, in wrapped
+  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/unittestplus.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;19&lt;/span&gt;, &lt;span class="k"&gt;in&lt;/span&gt; wrapped
     &lt;span class="k"&gt;return&lt;/span&gt; method&lt;span class="o"&gt;(&lt;/span&gt;instance, *args, **params, **kwargs&lt;span class="o"&gt;)&lt;/span&gt;
-  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/test_example.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;46&lt;/span&gt;, in test_dog_name_msg_and_params
+  File &lt;span class="s2"&gt;&amp;quot;/Users/joshmassover/Development/unittestplus/test_example.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;46&lt;/span&gt;, &lt;span class="k"&gt;in&lt;/span&gt; test_dog_name_msg_and_params
     self.assertEqual&lt;span class="o"&gt;(&lt;/span&gt;dog.name, name + &lt;span class="s1"&gt;&amp;#39;fail&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 AssertionError: &lt;span class="s1"&gt;&amp;#39;Penelope&amp;#39;&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Penelopefail&amp;#39;&lt;/span&gt;
 - Penelope
@@ -587,11 +562,10 @@ AssertionError: &lt;span class="s1"&gt;&amp;#39;Penelope&amp;#39;&lt;/span&gt; !
 
 
 ----------------------------------------------------------------------
-Ran &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; in &lt;span class="m"&gt;0&lt;/span&gt;.001s
+Ran &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.001s
 
 FAILED &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;failures&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;Fixtures&lt;/h2&gt;
 &lt;p&gt;Fixtures are a neat way to reuse code across tests. I didn't think a direct translation of pytest fixtures is appropriate
@@ -668,7 +642,6 @@ TestCase that handles the fixture initialization for both &lt;code&gt;setUp&lt;/
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assertEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;penelope_class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;lol&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;python3 -m unittest discover -v 
 test_penelope_class &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestFixtureDecorator&lt;span class="o"&gt;)&lt;/span&gt; ... ok
 test_penelope_class_was_modified &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestFixtureDecorator&lt;span class="o"&gt;)&lt;/span&gt; ... ok
@@ -676,11 +649,10 @@ test_penelope_fixture &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestFixtu
 test_penelope_fixture_is_recreated &lt;span class="o"&gt;(&lt;/span&gt;test_example.TestFixtureDecorator&lt;span class="o"&gt;)&lt;/span&gt; ... ok
 
 ----------------------------------------------------------------------
-Ran &lt;span class="m"&gt;4&lt;/span&gt; tests in &lt;span class="m"&gt;0&lt;/span&gt;.000s
+Ran &lt;span class="m"&gt;4&lt;/span&gt; tests &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;.000s
 
 OK
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This code only scratches the surface of what pytest implements. If you go further, you'll find the stdlib hard to extend
 for things like plugins, cli, complex nested and session based fixtures, assertion re-writing, to name a few. Would you
@@ -762,12 +734,10 @@ Full code can be &lt;a href="https://github.com/massover/sse-example"&gt;found h
     &lt;span class="n"&gt;execute_from_command_line&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;In production, you would serve this application using a wsgi server such as &lt;a href="https://gunicorn.org/"&gt;gunicorn&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# we&amp;#39;ll use 1 worker for a &amp;quot;fair&amp;quot; comparison to asgi&lt;/span&gt;
 &lt;span class="n"&gt;guncorn&lt;/span&gt; &lt;span class="n"&gt;wsgi&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;workers&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;If you successfully loaded that app up as is for wsgi, you'd probably notice:&lt;/p&gt;
 &lt;ul&gt;
@@ -787,7 +757,6 @@ Full code can be &lt;a href="https://github.com/massover/sse-example"&gt;found h
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2020&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;06&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;22&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0400&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;16729&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;Worker&lt;/span&gt; &lt;span class="n"&gt;exiting&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16729&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2020&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;06&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;22&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;0400&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;16914&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;INFO&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;Booting&lt;/span&gt; &lt;span class="n"&gt;worker&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;16914&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;Update to ASGI&lt;/h2&gt;
 &lt;p&gt;To make this async, there are a few easy things we need to:&lt;/p&gt;
@@ -870,11 +839,9 @@ is copied and pasted from the Django &lt;code&gt;ASGIHandler&lt;/code&gt;, with 
     &lt;span class="n"&gt;execute_from_command_line&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;In production, you would serve this application using an asgi server such as &lt;a href="https://www.uvicorn.org/"&gt;uvicorn&lt;/a&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;uvicorn&lt;/span&gt; &lt;span class="n"&gt;asgi&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;workers&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom &lt;code&gt;ASGIHandler&lt;/code&gt; and &lt;code&gt;AysncStreamingHttpResponse&lt;/code&gt;, the code is very familiar to WSGI

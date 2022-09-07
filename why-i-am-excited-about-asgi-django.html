@@ -92,12 +92,10 @@ Full code can be <a href="https://github.com/massover/sse-example">found here</a
     <span class="n">execute_from_command_line</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>In production, you would serve this application using a wsgi server such as <a href="https://gunicorn.org/">gunicorn</a></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># we&#39;ll use 1 worker for a &quot;fair&quot; comparison to asgi</span>
 <span class="n">guncorn</span> <span class="n">wsgi</span><span class="p">:</span><span class="n">application</span> <span class="o">--</span><span class="n">workers</span> <span class="mi">1</span>
 </code></pre></div>
-
 
 <p>If you successfully loaded that app up as is for wsgi, you'd probably notice:</p>
 <ul>
@@ -117,7 +115,6 @@ Full code can be <a href="https://github.com/massover/sse-example">found here</a
 <span class="p">[</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">22</span> <span class="mi">20</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">53</span> <span class="o">-</span><span class="mi">0400</span><span class="p">]</span> <span class="p">[</span><span class="mi">16729</span><span class="p">]</span> <span class="p">[</span><span class="n">INFO</span><span class="p">]</span> <span class="n">Worker</span> <span class="n">exiting</span> <span class="p">(</span><span class="n">pid</span><span class="p">:</span> <span class="mi">16729</span><span class="p">)</span>
 <span class="p">[</span><span class="mi">2020</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">22</span> <span class="mi">20</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">53</span> <span class="o">-</span><span class="mi">0400</span><span class="p">]</span> <span class="p">[</span><span class="mi">16914</span><span class="p">]</span> <span class="p">[</span><span class="n">INFO</span><span class="p">]</span> <span class="n">Booting</span> <span class="n">worker</span> <span class="k">with</span> <span class="n">pid</span><span class="p">:</span> <span class="mi">16914</span>
 </code></pre></div>
-
 
 <h2>Update to ASGI</h2>
 <p>To make this async, there are a few easy things we need to:</p>
@@ -200,11 +197,9 @@ is copied and pasted from the Django <code>ASGIHandler</code>, with additional c
     <span class="n">execute_from_command_line</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>In production, you would serve this application using an asgi server such as <a href="https://www.uvicorn.org/">uvicorn</a></p>
 <div class="highlight"><pre><span></span><code><span class="n">uvicorn</span> <span class="n">asgi</span><span class="p">:</span><span class="n">application</span> <span class="o">--</span><span class="n">workers</span> <span class="mi">1</span>
 </code></pre></div>
-
 
 <p>Once loaded, open a tab, and then open some more. Even with one worker, it's able to handle it because of the non blocking nature of
 an ASGI request. Besides the custom <code>ASGIHandler</code> and <code>AysncStreamingHttpResponse</code>, the code is very familiar to WSGI

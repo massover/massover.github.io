@@ -54,7 +54,6 @@ SSE event stream, including <code>AsyncStreamingHttpResponse</code>, <code>ASGIH
     <span class="k">return</span> <span class="n">response</span>
 </code></pre></div>
 
-
 <p><strong>Can you use the ORM?</strong></p>
 <p>Yes you can with the <a href="https://docs.djangoproject.com/en/3.1/topics/async/#asgiref.sync.sync_to_async">sync_to_async</a> 
 wrapper. The example from the documentation seems rather straight forward.</p>
@@ -62,7 +61,6 @@ wrapper. The example from the documentation seems rather straight forward.</p>
 <span class="k">def</span> <span class="nf">get_blog</span><span class="p">(</span><span class="n">pk</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
 </code></pre></div>
-
 
 <p>When I originally wrote the <code>async_toasts</code> function, the code looked roughly like:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@sync_to_async</span>
@@ -73,7 +71,6 @@ wrapper. The example from the documentation seems rather straight forward.</p>
     <span class="n">toasts</span> <span class="o">=</span> <span class="k">await</span> <span class="n">async_toasts</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
     <span class="o">...</span>
 </code></pre></div>
-
 
 <p>If you called that view, you'd be greeted with a friendly <code>SynchronousOnlyOperation</code> exception. This exception is super helpful. It prevents
 us from shooting ourselves in the foot. If you're an experienced Django developer you probably rely heavily on lazy querysets. When working with
@@ -117,7 +114,6 @@ Traceback (most recent call last):
 django.core.exceptions.SynchronousOnlyOperation: You cannot call this from an async context - use a thread or sync_to_async.
 </code></pre></div>
 
-
 <h2>A backend endpoint to acknowledge toasts</h2>
 <p>APIs are way more fun to build with drf. We need a way for the user to acknolwedge the toast such that they dissapear
 from the stream. A <code>/toast/:id/read/</code> action endpoint with permissions only for the owner will do.</p>
@@ -136,7 +132,6 @@ from the stream. A <code>/toast/:id/read/</code> action endpoint with permission
         <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">toast</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
-
 
 <h2>A way to serve toast javascript and css</h2>
 <p>The easiest way is a <a href="https://github.com/massover/dj-asgi-utils/blob/master/dj_asgi_utils/toasts/middleware.py">middleware</a> that
@@ -174,14 +169,12 @@ asynchronous middleware. Removing all of the toast specific business logic, I st
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;example/toast_demo.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
 </code></pre></div>
 
-
 <p>The above code will hang forever, here, when awaiting from the first <code>async_create_toast</code> function. </p>
 <div class="highlight"><pre><span></span><code>&gt; /usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/lib/python3.7/threading.py(970)_bootstrap_inner()
     969             with _active_limbo_lock:
 --&gt; 970                 try:
     971                     # We don&#39;t call self._delete() because it also
 </code></pre></div>
-
 
 <p>While I don't understand exactly why the above is hanging, the <a href="https://docs.djangoproject.com/en/3.1/topics/http/middleware/#asynchronous-support">async middleware docs</a>
 provide the necessary decorators in order to create async middleware. In the case of async only, the middleware
@@ -193,7 +186,6 @@ can be:</p>
 
     <span class="k">return</span> <span class="n">middleware</span>
 </code></pre></div>
-
 
 <h2>Creating toasts</h2>
 <p>Toasts are created programmatically in either async or sync code. If you were in a pure async view, you'd use the async function. 
@@ -209,7 +201,6 @@ are created, they would be available over the stream if the user is connected, u
     <span class="n">obj</span> <span class="o">=</span> <span class="n">Toast</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span>
 </code></pre></div>
-
 
 <p>While some edges might still be rough around ASGI, it seems like a great foundation has been set up to both protect us 
 and build upon. Have you started building anything with ASGI?</p></section>

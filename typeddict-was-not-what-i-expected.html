@@ -28,7 +28,6 @@
     <span class="n">email</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 
-
 <h2>I expected it to work like a dataclass</h2>
 <p>If I didn't provide class attributes to the constructor, I expected
 it to error at runtime.</p>
@@ -44,7 +43,6 @@ it to error at runtime.</p>
 <span class="n">Out</span><span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="s1">&#39;John&#39;</span>
 </code></pre></div>
 
-
 <p>At first this seemed unhelpful. However the issue here is mostly with my understanding and usage of type hinting. It doesn't
 need to error at runtime. That's the purpose of catching this via typing hinting using mypy.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># main.py</span>
@@ -57,14 +55,12 @@ need to error at runtime. That's the purpose of catching this via typing hinting
     <span class="p">)</span>
 </code></pre></div>
 
-
 <hr>
 <div class="highlight"><pre><span></span><code>mypy main.py
 
 main.py:11: error: Missing key <span class="s1">&#39;email&#39;</span> <span class="k">for</span> TypedDict <span class="s2">&quot;User&quot;</span>
-Found <span class="m">1</span> error in <span class="m">1</span> file <span class="o">(</span>checked <span class="m">1</span> <span class="nb">source</span> file<span class="o">)</span>
+Found <span class="m">1</span> error <span class="k">in</span> <span class="m">1</span> file <span class="o">(</span>checked <span class="m">1</span> <span class="nb">source</span> file<span class="o">)</span>
 </code></pre></div>
-
 
 <h2>I expected it to behave like a normal class</h2>
 <p>I wanted to add a method to the class.</p>
@@ -87,7 +83,6 @@ Found <span class="m">1</span> error in <span class="m">1</span> file <span clas
 <span class="ne">AttributeError</span><span class="p">:</span> <span class="s1">&#39;dict&#39;</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s1">&#39;get_full_name&#39;</span>
 </code></pre></div>
 
-
 <p>The <a href="https://www.python.org/dev/peps/pep-0589/#class-based-syntax">docs</a> talk about the restrictions of the
 class based syntax, including</p>
 <blockquote>
@@ -97,7 +92,6 @@ class based syntax, including</p>
 <div class="highlight"><pre><span></span><code><span class="n">movie</span><span class="p">:</span> <span class="n">Movie</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Blade Runner&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">1982</span><span class="p">}</span>
 </code></pre></div>
-
 
 <p>As in the name, <code>TypedDict</code> has its use for adding type hints to dicts.</p></section>
 
