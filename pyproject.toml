@@ -6,9 +6,9 @@ authors = ["Joshua Massover <massover@simplebet.io>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pelican = {version = "^4.2.0", extras = ["Markdown"]}
-Markdown = "^3.2.2"
-ghp-import = "^0.5.5"
+pelican = {version = "*", extras = ["Markdown"]}
+Markdown = "*"
+ghp-import = "*"
 
 [tool.poetry.dev-dependencies]
 
